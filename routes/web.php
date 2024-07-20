@@ -16,9 +16,6 @@ use App\Http\Controllers\BookController;
 
 Route::get('/', [BookController::class, 'index'])->name('client.page.home');
 
-Route::get('/my', function (){
-    return view('admin.index');
-})->name('list');
 
 Route::get('/detail/{id}', [BookController::class,'detail'])->name('client.page.detail');
 
@@ -40,6 +37,19 @@ Route::prefix('account')->group(function (){
     Route::get('/forgotpassword', function (){
         return view('client.page.account.forgotPassword');
     })->name('client.account.forgotpassword');
+});
+
+
+
+
+// ADMIN
+Route::prefix('admin')->group(function (){
+    Route::get('/', function (){
+        return view('admin.page.dashboard');
+    })->name('admin.index');
+    Route::get('/category', function (){
+        return view('admin.category.create');
+    })->name('admin.category.create');
 });
 
 
