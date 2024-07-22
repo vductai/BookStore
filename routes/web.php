@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BookController;
-
+use App\Http\Controllers\Admin\BookController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\ShowBookPageController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,14 +15,12 @@ use App\Http\Controllers\BookController;
 |
 */
 
-Route::get('/', [BookController::class, 'index'])->name('client.page.home');
+Route::get('/', [ShowBookPageController::class, 'index'])->name('client.page.home');
 
-
-Route::get('/detail/{id}', [BookController::class,'detail'])->name('client.page.detail');
-
+Route::get('/detail/{id}', [ShowBookPageController::class,'detail'])->name('client.page.detail');
 
 Route::prefix('bookpage')->group(function (){
-   Route::get('/{id}', [BookController::class, 'selBookByCate'])->name('client.page.bookbycate');
+   Route::get('/{id}', [ShowBookPageController::class, 'selBookByCate'])->name('client.page.bookbycate');
 });
 
 
@@ -44,12 +43,32 @@ Route::prefix('account')->group(function (){
 
 // ADMIN
 Route::prefix('admin')->group(function (){
+    // trang chủ admin
     Route::get('/', function (){
         return view('admin.page.dashboard');
     })->name('admin.index');
-    Route::get('/category', function (){
-        return view('admin.category.create');
-    })->name('admin.category.create');
+
+
+
+
+
+    // category
+    Route::get('/category', [CategoryController::class,'index'])->name('admin.category.insert');
+    Route::post('/category', [CategoryController::class, 'store'])->name('admin.category.store');
+    Route::get('/category/list', [CategoryController::class, 'listCategory'])->name('admin.category.list');
+    Route::delete('/category/list/{id}', [CategoryController::class, 'deleteCategory'])->name('admin.category.delete');
+    Route::get('/category/update/{id}', [CategoryController::class, 'updateView'])->name('admin.category.updateview');
+    Route::put('/category/update/{id}', [CategoryController::class, 'updateCategory'])->name('admin.category.update');
+
+
+
+    // book
+    Route::get('/book', [BookController::class, 'index'])->name('admin.book.list');
+    Route::get('/book/create', [BookController::class, 'create'])->name('admin.book.insert');
+    Route::post('/book/create', [BookController::class, 'store'])->name('admin.book.store');
+    Route::delete('/book/{id}', [BookController::class, 'deleteBook'])->name('admin.book.delete');
+    Route::get('/book/update/{id}', [BookController::class, 'updateView'])->name('admin.book.updateview');
+    Route::put('/book/update/{id}', [BookController::class, 'updateBook'])->name('admin.book.update');
 });
 
 

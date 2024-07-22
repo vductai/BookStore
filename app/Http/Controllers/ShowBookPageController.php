@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\book;
 use App\Models\category;
 
-class BookController extends Controller
+class ShowBookPageController extends Controller
 {
     public function index()
     {

@@ -33,7 +33,7 @@
             <a class="nav-link fs-5" href="{{route('client.page.bookbycate', 1)}}">Sản phẩm</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link fs-5" href="#">Giới thiệu</a>
+            <a class="nav-link fs-5" href="{{route('admin.index')}}">Giới thiệu</a>
         </li>
     </ul>
     <nav class="navbar mx-5">
@@ -48,7 +48,7 @@
     </nav>
     <ul class="nav justify-content-center mx-5">
         <li class="nav-item">
-            <a class="nav-link fs-5" href="{{route('client.account.login')}}">Đăng nhập/ Đăng kí</a>
+            <a class="nav-link fs-5" href="{{route('client.account.login')}}">Đăng nhập</a>
         </li>
     </ul>
 </header>

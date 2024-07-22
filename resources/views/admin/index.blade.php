@@ -20,6 +20,8 @@
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet"/>
 
+    <script src="{{asset('js/admin.js')}}"></script>
+
     {{--link bootstrap--}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -42,7 +44,7 @@
         <!-- Sidebar - Brand -->
         <a
             class="sidebar-brand d-flex align-items-center justify-content-center"
-            href="index.html">
+            href="{{route('admin.index')}}">
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
@@ -53,7 +55,7 @@
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="{{route('admin.index')}}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span></a
             >
@@ -84,8 +86,8 @@
                 data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     {{--                    <h6 class="collapse-header">Custom Components:</h6>--}}
-                    <a class="collapse-item" href="cards.html">Danh sách danh mục</a>
-                    <a class="collapse-item" href="buttons.html">Thêm danh mục</a>
+                    <a class="collapse-item" href="{{route('admin.category.list')}}">Danh sách danh mục</a>
+                    <a class="collapse-item" href="{{route('admin.category.insert')}}">Thêm danh mục</a>
                 </div>
             </div>
         </li>
@@ -109,8 +111,8 @@
                 data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     {{--                    <h6 class="collapse-header">Custom Utilities:</h6>--}}
-                    <a class="collapse-item" href="utilities-color.html">Danh sách</a>
-                    <a class="collapse-item" href="utilities-border.html">Thêm sách</a>
+                    <a class="collapse-item" href="{{route('admin.book.list')}}">Danh sách</a>
+                    <a class="collapse-item" href="{{route('admin.book.insert')}}">Thêm sách</a>
                 </div>
             </div>
         </li>
@@ -336,7 +338,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                Select "Logout" below if you are ready to end your current session.
+                Sẻ chuyển đến trang chủ người dùng
             </div>
             <div class="modal-footer">
                 <button
@@ -345,7 +347,7 @@
                     data-dismiss="modal">
                     Cancel
                 </button>
-                <a class="btn btn-primary" href="login.html">Logout</a>
+                <a class="btn btn-primary" href="{{route('client.page.home')}}">Đăng xuất</a>
             </div>
         </div>
     </div>
