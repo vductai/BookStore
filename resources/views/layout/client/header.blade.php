@@ -33,7 +33,7 @@
             <a class="nav-link fs-5" href="{{route('client.page.bookbycate', 1)}}">Sản phẩm</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link fs-5" href="{{route('admin.index')}}">Giới thiệu</a>
+            <a class="nav-link fs-5" href="{{route('admin.index')}}">Admin</a>
         </li>
     </ul>
     <nav class="navbar mx-5">
