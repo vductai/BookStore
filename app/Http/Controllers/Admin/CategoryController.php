@@ -20,15 +20,15 @@ class CategoryController extends Controller
                 'category_name' => 'required|regex:/^[\pL\s\d]+$/u'
             ],
             [
-                "category_name.required"=>"Không được để trống",
-                "category_name.regex"=>"Không được chứa kí tự đặc biệt"
+                "category_name.required" => "Không được để trống",
+                "category_name.regex" => "Không được chứa kí tự đặc biệt"
             ]
         );
         $data = [
             'category_name' => $request['category_name']
         ];
         category::query()->insert($data);
-        return redirect()->route('admin.index');
+        return redirect()->route('admin.category.list');
     }
 
     public function listCategory()
@@ -60,8 +60,8 @@ class CategoryController extends Controller
                 'category_name' => 'required|regex:/^[\pL\s\d]+$/u'
             ],
             [
-                "category_name.required"=>"Không được để trống",
-                "category_name.regex"=>"Không được chứa kí tự đặc biệt"
+                "category_name.required" => "Không được để trống",
+                "category_name.regex" => "Không được chứa kí tự đặc biệt"
             ]
         );
         $data = [

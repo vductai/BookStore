@@ -73,7 +73,7 @@
         </div>
         <div class="container mt-3 bg-white ">
             <h3 class="border-bottom pt-3 ps-2">Mô tả sản phẩm</h3>
-            <pre class="fs-6" style="word-wrap: break-word; white-space: pre-wrap">{{$item->desc}}</pre>
+            <pre class="fs-6" style="word-wrap: break-word; white-space: pre-wrap">{!!  $item->desc !!}</pre>
         </div>
     @endforeach
     <div class="container bg-white mb-3 pb-2">

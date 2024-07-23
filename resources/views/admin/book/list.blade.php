@@ -18,7 +18,7 @@
             <tbody >
             @foreach($listBook as $item)
                 <tr >
-                    <th scope="row">{{$item->id_book}}</th>
+                    <th scope="row">{{$loop->index + 1}}</th>
                     <td><img src="{{asset('upload/'. $item->image)}}" width="50" height="50" alt=""></td>
                     <td>{{$item->book_name}}</td>
                     <td>{{$item->price}} đ</td>
@@ -32,21 +32,26 @@
                             @method('DELETE')
                             @csrf
                             <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <button type="button" class="btn btn-danger"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal">
                                     <i class="fa-solid fa-trash"></i>
                                 </button>
                                 <!-- Modal -->
-                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="exampleModal" tabindex="-1"
+                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                <button type="button" class="btn-close"
+                                                        data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
                                                 Bạn có chắc muốn xoá không ?
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
+                                                <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Thoát</button>
                                                 <button type="submit" class="btn btn-danger">Xoá</button>
                                             </div>
                                         </div>

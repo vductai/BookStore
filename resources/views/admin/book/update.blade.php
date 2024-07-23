@@ -9,7 +9,7 @@
                 @method('PUT')
                 <h3 class="text-success mb-5 text-center">Sửa sách</h3>
                 <div class="d-flex justify-content-center">
-                    <div class="mx-3">
+                    <div class="w-75">
                         <div class="mb-3">
                             <label class="form-label">Tên sách</label>
                             <input type="text" class="form-control" name="name" placeholder="{{$item->book_name}}">
@@ -18,16 +18,46 @@
                             @enderror
                         </div>
                         <div class="mb-3">
+                            <label class="form-label">Mô tả</label>
+                            <textarea name="desc" id="desc" style="resize: none" cols="100" rows="20">{{$item->desc}}</textarea>
+                            {{--                            @error('desc')--}}
+                            {{--                            <p class="text-danger">{{$message}}</p>--}}
+                            {{--                            @enderror--}}
+                        </div>
+                        <script !src="">
+                            $('#desc').summernote({
+                                tabsize: 2,
+                                height: 414,
+                                minHeight:414,
+                                maxHeight:414,
+                                toolbar: [
+                                    ['style', ['style']],
+                                    ['font', ['bold', 'underline', 'clear']],
+                                    ['fontsize', ['fontsize']],
+                                    ['color', ['color']],
+                                    ['para', ['ul', 'ol', 'paragraph']],
+                                    ['table', ['table']],
+                                    ['insert', ['link', 'picture', 'video']],
+                                    ['view', ['fullscreen', 'codeview', 'help', 'height']]
+                                ]
+                            })
+                        </script>
+                    </div>
+                    <div class="mx-3">
+
+                        <div class="mb-3">
                             <label class="form-label">Ảnh sách</label>
-                            <input type="file" class="form-control" name="img" placeholder="{{$item->image}}">
+                            <input type="file" class="form-control" name="imgPost" placeholder="{{$item->image}}">
                             @error('img')
                             <p class="text-danger">{{$message}}</p>
                             @enderror
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Giá sách</label>
-                            <input type="text" id="format" class="form-control" name="price"
-                                   placeholder="{{$item->price}} đ">
+                            <div class="d-flex justify-content-center border rounded">
+                                <input type="text" id="format" class="form-control border-0" name="price">
+                                <input type="text" class="w-25 bg-white form-control border-0" value="đ" disabled>
+                            </div>
                             @error('price')
                             <p class="text-danger">{{$message}}</p>
                             @enderror
@@ -46,16 +76,7 @@
                             @enderror
                         </div>
                     </div>
-                    <div>
-                        <div class="mb-3">
-                            <label class="form-label">Mô tả</label>
-                            <textarea name="desc" class="form-control" style="resize: none" cols="100" rows="20"
-                                      placeholder="{{$item->desc}}"></textarea>
-                            @error('desc')
-                            <p class="text-danger">{{$message}}</p>
-                            @enderror
-                        </div>
-                    </div>
+
                 </div>
 
                 <div class="mb-3 d-flex justify-content-center mt-5">

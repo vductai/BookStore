@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\ShowBookPageController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,49 +18,43 @@ use App\Http\Controllers\ShowBookPageController;
 
 Route::get('/', [ShowBookPageController::class, 'index'])->name('client.page.home');
 
-Route::get('/detail/{id}', [ShowBookPageController::class,'detail'])->name('client.page.detail');
+Route::get('/detail/{id}', [ShowBookPageController::class, 'detail'])->name('client.page.detail');
 
-Route::prefix('bookpage')->group(function (){
-   Route::get('/{id}', [ShowBookPageController::class, 'selBookByCate'])->name('client.page.bookbycate');
+Route::prefix('bookpage')->group(function () {
+    Route::get('/{id}', [ShowBookPageController::class, 'selBookByCate'])->name('client.page.bookbycate');
 });
 
 
-Route::prefix('account')->group(function (){
-    Route::get('/login', function (){
+Route::prefix('account')->group(function () {
+    Route::get('/login', function () {
         return view('client.page.account.login');
     })->name('client.account.login');
 
-    Route::get('/register', function (){
+    Route::get('/register', function () {
         return view('client.page.account.register');
     })->name('client.account.register');
 
-    Route::get('/forgotpassword', function (){
+    Route::get('/forgotpassword', function () {
         return view('client.page.account.forgotPassword');
     })->name('client.account.forgotpassword');
 });
 
 
-
-
 // ADMIN
-Route::prefix('admin')->group(function (){
+Route::prefix('admin')->group(function () {
     // trang chủ admin
-    Route::get('/', function (){
+    Route::get('/', function () {
         return view('admin.page.dashboard');
     })->name('admin.index');
 
 
-
-
-
     // category
-    Route::get('/category', [CategoryController::class,'index'])->name('admin.category.insert');
-    Route::post('/category', [CategoryController::class, 'store'])->name('admin.category.store');
-    Route::get('/category/list', [CategoryController::class, 'listCategory'])->name('admin.category.list');
-    Route::delete('/category/list/{id}', [CategoryController::class, 'deleteCategory'])->name('admin.category.delete');
+    Route::get('/category/create', [CategoryController::class, 'index'])->name('admin.category.insert');
+    Route::post('/category/create', [CategoryController::class, 'store'])->name('admin.category.store');
+    Route::get('/category', [CategoryController::class, 'listCategory'])->name('admin.category.list');
+    Route::delete('/category/{id}', [CategoryController::class, 'deleteCategory'])->name('admin.category.delete');
     Route::get('/category/update/{id}', [CategoryController::class, 'updateView'])->name('admin.category.updateview');
     Route::put('/category/update/{id}', [CategoryController::class, 'updateCategory'])->name('admin.category.update');
-
 
 
     // book

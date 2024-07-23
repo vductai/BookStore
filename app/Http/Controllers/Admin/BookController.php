@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\book;
 use App\Models\category;
+use DOMDocument;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -31,8 +32,7 @@ class BookController extends Controller
         $request->validate(
             [
                 "name" => 'required|min:10|regex:/^[\pL\s\d]+$/u',
-                "img" => 'required|mimes:png,jpg',
-                "desc" => 'required|min:10',
+                "imgPost" => 'required|mimes:png,jpg',
                 "price" => 'required|min:4',
                 "category" => 'required',
             ],
@@ -40,10 +40,8 @@ class BookController extends Controller
                 "name.required" => "Không được để trống",
                 "name.regex" => "Tên sách không được chứa kí tự đặc biệt",
                 "name.min" => "Tối thiểu :min kí tự",
-                "img.required" => "Vui lòng nhập ảnh",
-                "img.mimes" => "Định dạng ảnh không hợp lệ",
-                "desc.required" => "Không được để trống",
-                "desc.min" => "Tối thiểu :min kí tự",
+                "imgPost.required" => "Vui lòng nhập ảnh",
+                "imgPost.mimes" => "Định dạng ảnh không hợp lệ",
                 "price.required" => "Không được để trống",
                 //"price.regex" => "Vui lòng nhập đúng định dạng",
                 "price.min" => "Tối thiểu :min chữ số",
@@ -51,21 +49,37 @@ class BookController extends Controller
             ]
         );
 
-        if ($request->hasFile('img')) {
-            $file = $request->file('img');
+        if ($request->hasFile('imgPost')) {
+            $file = $request->file('imgPost');
             $imageName = time() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('upload/'), $imageName);
-            $request->merge(['image'=>$imageName]);
+            $request->merge(['image' => $imageName]);
         } else {
             return back()->with('error', 'Có lỗi xảy ra trong quá trình upload ảnh');
         }
+
+
+        $desc = $request['desc'];
+        $dom = new DOMDocument();
+        $dom->loadHTML($desc, 9);
+
+        $imageDesc = $dom->getElementsByTagName('img');
+        foreach ($imageDesc as $key => $img) {
+            $data = base64_decode(explode(',', explode(';', $img->getAttribute('src'))[1])[1]);
+            $imageDescName = "/upload/" . time() . '.' . $key . 'png';
+            file_put_contents(public_path() . $imageDescName, $data);
+            $img->removeAttribute('src');
+            $img->setAttribute('src', $imageDescName);
+        }
+
+        $desc = $dom->saveHTML();
 
 
         $data = [
             'book_name' => $request['name'],
             'price' => $request['price'],
             'image' => $imageName,
-            'desc' => $request['desc'],
+            'desc' => $desc,
             'category_id' => $request['category']
         ];
 
@@ -99,8 +113,7 @@ class BookController extends Controller
         $request->validate(
             [
                 "name" => 'required|min:10|regex:/^[\pL\s\d]+$/u',
-                "img" => 'required|mimes:png,jpg',
-                "desc" => 'required|min:10',
+                "imgPost" => 'required|mimes:png,jpg',
                 "price" => 'required|numeric|min:4',
                 "category" => 'required',
             ],
@@ -108,10 +121,8 @@ class BookController extends Controller
                 "name.required" => "Không được để trống",
                 "name.regex" => "Tên sách không được chứa kí tự đặc biệt",
                 "name.min" => "Tối thiểu :min kí tự",
-                "img.required" => "Vui lòng nhập ảnh",
-                "img.mimes" => "Định dạng ảnh không hợp lệ",
-                "desc.required" => "Không được để trống",
-                "desc.min" => "Tối thiểu :min kí tự",
+                "imgPost.required" => "Vui lòng nhập ảnh",
+                "imgPost.mimes" => "Định dạng ảnh không hợp lệ",
                 "price.required" => "Không được để trống",
                 "price.numeric" => "Vui lòng nhập đúng định dạng",
                 "price.min" => "Tối thiểu :min chữ số",
@@ -122,21 +133,40 @@ class BookController extends Controller
         $book = book::findOrFail($id_book);
 
 
-        if ($request->hasFile('img')) {
-            if (File::exists(public_path('upload/'. $book->image))){
-                File::delete(public_path('upload/'. $book->image));
+        $desc = $request['desc'];
+        $dom = new DOMDocument();
+        $dom->loadHTML($desc, 9);
+
+        $imageDesc = $dom->getElementsByTagName('img');
+        foreach ($imageDesc as $key => $img) {
+            if (strpos($img->getAttribute('src'), 'data:image/') == 0) {
+                $data = base64_decode(explode(',', explode(';', $img->getAttribute('src'))[1])[1]);
+                $imageDescName = "/upload/" . time() . '.' . $key . 'png';
+                file_put_contents(public_path() . $imageDescName, $data);
+                $img->removeAttribute('src');
+                $img->setAttribute('src', $imageDescName);
             }
-            $file = $request->file('img');
+
+        }
+
+        $desc = $dom->saveHTML();
+
+
+        if ($request->hasFile('imgPost')) {
+            if (File::exists(public_path('upload/' . $book->image))) {
+                File::delete(public_path('upload/' . $book->image));
+            }
+            $file = $request->file('imgPost');
             $imageName = time() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('upload'), $imageName);
-            $request->merge(['image'=>$imageName]);
+            $request->merge(['image' => $imageName]);
 
         }
         $data = [
             'book_name' => $request['name'],
             'price' => $request['price'],
-            'image'=> $imageName,
-            'desc' => $request['desc'],
+            'image' => $imageName,
+            'desc' => $desc,
             'category_id' => $request['category']
         ];
 
