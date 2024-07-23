@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-4 bg-white border-end rounded-start-2 d-flex justify-content-center py-3">
                     <div class="w-75 h-auto">
-                        <img src="{{asset('img/book/book2.png')}}" alt="">
+                        <img src="{{asset('upload/'. $item->image)}}" height="330" alt="">
                     </div>
                 </div>
                 <div class="col-8 bg-white rounded-end-2">
