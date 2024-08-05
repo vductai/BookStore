@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BookRequest;
 use App\Models\book;
 use App\Models\category;
 use DOMDocument;
@@ -26,28 +27,28 @@ class BookController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(BookRequest $request)
     {
-        // |regex:/^\d+$/
-        $request->validate(
-            [
-                "name" => 'required|min:10|regex:/^[\pL\s\d]+$/u',
-                "imgPost" => 'required|mimes:png,jpg',
-                "price" => 'required|min:4',
-                "category" => 'required',
-            ],
-            [
-                "name.required" => "Không được để trống",
-                "name.regex" => "Tên sách không được chứa kí tự đặc biệt",
-                "name.min" => "Tối thiểu :min kí tự",
-                "imgPost.required" => "Vui lòng nhập ảnh",
-                "imgPost.mimes" => "Định dạng ảnh không hợp lệ",
-                "price.required" => "Không được để trống",
-                //"price.regex" => "Vui lòng nhập đúng định dạng",
-                "price.min" => "Tối thiểu :min chữ số",
-                "category.required" => "Chưa chọn danh mục",
-            ]
-        );
+//        // |regex:/^\d+$/
+//        $request->validate(
+//            [
+//                "name" => 'required|min:10|regex:/^[\pL\s\d]+$/u',
+//                "imgPost" => 'required|mimes:png,jpg',
+//                "price" => 'required|min:4',
+//                "category" => 'required',
+//            ],
+//            [
+//                "name.required" => "Không được để trống",
+//                "name.regex" => "Tên sách không được chứa kí tự đặc biệt",
+//                "name.min" => "Tối thiểu :min kí tự",
+//                "imgPost.required" => "Vui lòng nhập ảnh",
+//                "imgPost.mimes" => "Định dạng ảnh không hợp lệ",
+//                "price.required" => "Không được để trống",
+//                //"price.regex" => "Vui lòng nhập đúng định dạng",
+//                "price.min" => "Tối thiểu :min chữ số",
+//                "category.required" => "Chưa chọn danh mục",
+//            ]
+//        );
 
         if ($request->hasFile('imgPost')) {
             $file = $request->file('imgPost');
@@ -107,28 +108,28 @@ class BookController extends Controller
         return view('admin.book.update', compact('bookById', 'listCategory'));
     }
 
-    public function updateBook(Request $request, $id_book)
+    public function updateBook(BookRequest $request, $id_book)
     {
-        // regex:/^\d+$/
-        $request->validate(
-            [
-                "name" => 'required|min:10|regex:/^[\pL\s\d]+$/u',
-                "imgPost" => 'required|mimes:png,jpg',
-                "price" => 'required|numeric|min:4',
-                "category" => 'required',
-            ],
-            [
-                "name.required" => "Không được để trống",
-                "name.regex" => "Tên sách không được chứa kí tự đặc biệt",
-                "name.min" => "Tối thiểu :min kí tự",
-                "imgPost.required" => "Vui lòng nhập ảnh",
-                "imgPost.mimes" => "Định dạng ảnh không hợp lệ",
-                "price.required" => "Không được để trống",
-                "price.numeric" => "Vui lòng nhập đúng định dạng",
-                "price.min" => "Tối thiểu :min chữ số",
-                "category.required" => "Chưa chọn danh mục",
-            ]
-        );
+//        // regex:/^\d+$/
+//        $request->validate(
+//            [
+//                "name" => 'required|min:10|regex:/^[\pL\s\d]+$/u',
+//                "imgPost" => 'required|mimes:png,jpg',
+//                "price" => 'required|numeric|min:4',
+//                "category" => 'required',
+//            ],
+//            [
+//                "name.required" => "Không được để trống",
+//                "name.regex" => "Tên sách không được chứa kí tự đặc biệt",
+//                "name.min" => "Tối thiểu :min kí tự",
+//                "imgPost.required" => "Vui lòng nhập ảnh",
+//                "imgPost.mimes" => "Định dạng ảnh không hợp lệ",
+//                "price.required" => "Không được để trống",
+//                "price.numeric" => "Vui lòng nhập đúng định dạng",
+//                "price.min" => "Tối thiểu :min chữ số",
+//                "category.required" => "Chưa chọn danh mục",
+//            ]
+//        );
 
         $book = book::findOrFail($id_book);
 

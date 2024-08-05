@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\ShowBookPageController;
+use App\Http\Controllers\Admin\AccountController;
+use App\Http\Controllers\Admin\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,13 +28,12 @@ Route::prefix('bookpage')->group(function () {
 
 
 Route::prefix('account')->group(function () {
-    Route::get('/login', function () {
-        return view('client.page.account.login');
-    })->name('client.account.login');
+    Route::get('/login', [AccountController::class, 'loginView'])->name('client.account.login-view');
+    Route::post('/login', [AccountController::class, 'login'])->name('client.account.login');
 
-    Route::get('/register', function () {
-        return view('client.page.account.register');
-    })->name('client.account.register');
+    Route::get('/register', [AccountController::class, 'registerView'])->name('client.account.register-view');
+    Route::post('/register', [AccountController::class, 'store'])->name('client.account.register');
+    Route::get('/logout',[AccountController::class,'logout'])->name('client.account.logout');
 
     Route::get('/forgotpassword', function () {
         return view('client.page.account.forgotPassword');
@@ -43,6 +44,10 @@ Route::prefix('account')->group(function () {
 // ADMIN
 Route::prefix('admin')->group(function () {
     // trang chủ admin
+    Route::get('/login', [AccountController::class, 'loginViewAdmin'])->name('login-view-admin');
+    Route::post('/login', [AccountController::class, 'loginAdmin'])->name('login-admin');
+    Route::get('/logoutAdmin',[AccountController::class,'logoutAdmin'])->name('logoutAdmin');
+
     Route::get('/', function () {
         return view('admin.page.dashboard');
     })->name('admin.index');
@@ -64,6 +69,15 @@ Route::prefix('admin')->group(function () {
     Route::delete('/book/{id}', [BookController::class, 'deleteBook'])->name('admin.book.delete');
     Route::get('/book/update/{id}', [BookController::class, 'updateView'])->name('admin.book.updateview');
     Route::put('/book/update/{id}', [BookController::class, 'updateBook'])->name('admin.book.update');
+
+
+
+    // user
+    Route::get('/user', [UserController::class, 'index'])->name('admin.user.list');
+    Route::get('/user/update/{id}', [UserController::class, 'updateView'])->name('admin.user.update-view');
+    Route::put('/user/update/{id}', [UserController::class, 'update'])->name('admin.user.update');
+    Route::put('/user/updatePass/{id}', [UserController::class, 'updatePassword'])->name('admin.user.updatePass');
+    Route::delete('/user/delete/{id}', [UserController::class, 'delete'])->name('admin.user.delete');
 });
 
 

@@ -1,16 +1,27 @@
 @extends('layout.client.index')
 @section('content_client')
     <div class="container mt-5 d-flex justify-content-center ">
-
-        <form class="my-5 w-50 bg-white p-5 rounded ">
+        <form class="my-5 w-50 bg-white p-5 rounded " action="{{route('client.account.login')}}" method="post">
             <h3 class="text-success mb-5 text-center">Đăng nhập</h3>
+            @if(session('errorLogin'))
+                <div class="alert alert-danger" role="alert">
+                    {{session('errorLogin')}}
+                </div>
+            @endif
+            @csrf
             <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Tên đăng nhập</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <label class="form-label">Email</label>
+                <input type="text" class="form-control" name="email" >
+                @error('email')
+                <div class="text-danger">{{$message}}</div>
+                @enderror
             </div>
             <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Mật khẩu</label>
-                <input type="password" class="form-control" id="exampleInputPassword1">
+                <label class="form-label">Mật khẩu</label>
+                <input type="password" class="form-control" name="password" >
+                @error('password')
+                <div class="text-danger">{{$message}}</div>
+                @enderror
             </div>
             <div class="mb-3">
                 <button type="submit" class="form-control btn btn-success">Đăng nhập</button>
@@ -22,7 +33,7 @@
                     </p>
                     <p class="mt-3 text-center">
                         Bạn chưa có tài khoản?
-                        <a href="{{route('client.account.register')}}" class="text-decoration-none">
+                        <a href="{{route('client.account.register-view')}}" class="text-decoration-none">
                             Đăng kí
                         </a>
                     </p>

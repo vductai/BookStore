@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -33,7 +34,7 @@
             <a class="nav-link fs-5" href="{{route('client.page.bookbycate', 1)}}">Sản phẩm</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link fs-5" href="{{route('admin.index')}}">Admin</a>
+            <a class="nav-link fs-5" href="{{route('login-view-admin')}}">Admin</a>
         </li>
     </ul>
     <nav class="navbar mx-5">
@@ -47,9 +48,20 @@
         </div>
     </nav>
     <ul class="nav justify-content-center mx-5">
-        <li class="nav-item">
-            <a class="nav-link fs-5" href="{{route('client.account.login')}}">Đăng nhập</a>
-        </li>
+        @if(auth()->check())
+            <li class="nav-item">
+                <a class="nav-link fs-5" href="">{{auth()->user()->username}}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link fs-5" href="{{ route('client.account.logout') }}">Đăng xuất</a>
+            </li>
+        @else
+
+            <li class="nav-item">
+                <a class="nav-link fs-5" href="{{ route('client.account.login') }}">Đăng nhập</a>
+            </li>
+        @endif
+
     </ul>
 </header>
 

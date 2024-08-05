@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
 use App\Models\category;
 use Illuminate\Http\Request;
 
@@ -13,17 +14,17 @@ class CategoryController extends Controller
         return view('admin.category.create');
     }
 
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $request->validate(
-            [
-                'category_name' => 'required|regex:/^[\pL\s\d]+$/u'
-            ],
-            [
-                "category_name.required" => "Không được để trống",
-                "category_name.regex" => "Không được chứa kí tự đặc biệt"
-            ]
-        );
+//        $request->validate(
+//            [
+//                'category_name' => 'required|regex:/^[\pL\s\d]+$/u'
+//            ],
+//            [
+//                "category_name.required" => "Không được để trống",
+//                "category_name.regex" => "Không được chứa kí tự đặc biệt"
+//            ]
+//        );
         $data = [
             'category_name' => $request['category_name']
         ];
