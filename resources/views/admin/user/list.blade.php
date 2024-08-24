@@ -4,6 +4,9 @@
         <div class="">
             <h3 class="text-success">Danh sách user</h3>
         </div>
+        @if(session('successCreate'))
+            <div class="alert alert-danger" role="alert">{{session('successCreate')}}</div>
+        @endif
         @if(session('successUpdate'))
             <div class="alert alert-danger" role="alert">{{session('successUpdate')}}</div>
         @endif

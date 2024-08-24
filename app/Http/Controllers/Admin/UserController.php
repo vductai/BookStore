@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AccountRequest;
 use App\Http\Requests\UserRequest;
 use App\Models\Role;
 use App\Models\User;
@@ -94,4 +95,23 @@ class UserController extends Controller
             return redirect()->back()->with('errorPass', 'Mật khẩu cũ không chính xác');
         }
     }
+
+
+
+
+    // create admin
+    public function viewCreateAdmin(){
+        return view('admin.user.create');
+    }
+
+    public function storeAdmin(AccountRequest $request)
+    {
+        $data = $request->except(['_token']);
+        $data['password'] = Hash::make($data['password']);
+        User::insert($data);
+        return redirect()->route('admin.user.list')->with('successCreate', 'Thêm thành công');
+    }
+
+
+
 }

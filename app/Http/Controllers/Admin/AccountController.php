@@ -50,7 +50,8 @@ class AccountController extends Controller
             if ($user->id_role == '2'){
                 return redirect()->route('admin.index');
             }else if ($user->id_role == '1'){
-                return redirect()->back()->with('errorLoginAdmin', 'Tài khoản này không đủ thẩm quyền');
+                return redirect()->route('admin.index');
+//                return redirect()->back()->with('errorLoginAdmin', 'Tài khoản này không đủ thẩm quyền');
             }
             $request->session()->regenerate();
         } else {
@@ -134,5 +135,48 @@ class AccountController extends Controller
         User::insert($data);
         return redirect()->route('client.account.login');
     }
+
+
+    // reset pass
+    public function viewReset(){
+        return view('client.page.account.forgotPassword');
+    }
+    public function viewPass(){
+        return view('client.page.account.newPass');
+    }
+    private function generateSecurePassword($length = 12)
+    {
+        $password = '';
+        $upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $lowerCase = 'abcdefghijklmnopqrstuvwxyz';
+        $digits = '0123456789';
+        $specialCharacters = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+
+        // Ensure each character type is present at least once
+        $password .= $upperCase[rand(0, strlen($upperCase) - 1)];
+        $password .= $lowerCase[rand(0, strlen($lowerCase) - 1)];
+        $password .= $digits[rand(0, strlen($digits) - 1)];
+        $password .= $specialCharacters[rand(0, strlen($specialCharacters) - 1)];
+
+        // Fill the remaining length with random characters
+        $allCharacters = $upperCase . $lowerCase . $digits . $specialCharacters;
+        for ($i = 4; $i < $length; $i++) {
+            $password .= $allCharacters[rand(0, strlen($allCharacters) - 1)];
+        }
+
+        // Shuffle the password to ensure randomness
+        return str_shuffle($password);
+    }
+    public function resetPass(Request $request){
+        $data = $request['email'];
+        $user = User::where('email', $data)->first();
+        $newPass = $this->generateSecurePassword();
+        $user->password = Hash::make($newPass);
+        $user->save();
+
+        return redirect()->route('client.accont.pass-view', compact('newPass'));
+    }
+
+
 
 }

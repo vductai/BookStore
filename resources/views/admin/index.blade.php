@@ -30,6 +30,9 @@
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
 
+{{--    // chart--}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/Chart.js"></script>
+
 
     {{--delete category--}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -158,6 +161,7 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     {{--                        <h6 class="collapse-header">Login Screens:</h6>--}}
                     <a class="collapse-item" href="{{route('admin.user.list')}}">Danh sách tài khoản</a>
+                    <a class="collapse-item" href="{{route('admin.user.create-view')}}">Thêm tài khoản</a>
                 </div>
             </div>
         </li>
@@ -386,6 +390,6 @@
 
 <!-- Page level custom scripts -->
 <script src="{{asset('js/demo/chart-area-demo.js')}}"></script>
-<script src="{{asset('js/demo/chart-pie-demo.js')}}"></script>
+{{--<script src="{{asset('js/demo/chart-pie-demo.js')}}"></script>--}}
 </body>
 </html>

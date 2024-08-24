@@ -2,11 +2,12 @@
 @section('content_client')
 <div class="container mt-5 d-flex justify-content-center ">
 
-    <form class="my-5 w-50 bg-white p-5 rounded ">
+    <form class="my-5 w-50 bg-white p-5 rounded " method="post" action="{{route('client.accont.pass')}}">
+        @csrf
         <h3 class="text-success mb-5 text-center">Quên mật khẩu</h3>
         <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Email</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <label class="form-label">Email</label>
+            <input type="text" class="form-control" name="email">
         </div>
         <div class="mb-3">
             <button type="submit" class="form-control btn btn-success">Gửi email</button>

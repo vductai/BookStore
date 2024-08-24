@@ -22,13 +22,10 @@ class BookRequest extends FormRequest
     public function rules(): array
     {
         return [
-            [
                 "name" => 'required|min:10|regex:/^[\pL\s\d]+$/u',
                 "imgPost" => 'required|mimes:png,jpg',
                 "price" => 'required|numeric|min:4',
                 "category" => 'required'
-            ],
-
         ];
     }
 
